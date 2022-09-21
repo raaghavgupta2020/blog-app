@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-//index.js is basically taking the 
+//index.js is basically taking the App component and is rendering it to the DOM at 'root' position or id (i.e, index.html file)
 const root = ReactDOM.createRoot(document.getElementById('root'));//this root is basically the id of the file where these compenents are being rendered 
 root.render(
   <React.StrictMode>
