@@ -2,6 +2,8 @@ import './App.css';
 import Navbar from './Navbar';
 import Home from './Home';
 import Homee from './Homee';
+import {BrowserRouter as Router , Route  , Switch} from 'react-router-dom';
+import Create from './Create';
 
 function App() { //App component is also called the root component 
   //It is the first component which gets rendered through the DOM
@@ -17,26 +19,38 @@ function App() { //App component is also called the root component
 
   return (
 
-    <div className="App">
-      <Navbar/>
-      <div className="content"> 
-        {/* <Home/> */}
-        <Homee/>
+    <Router>
+      <div className="App">
+        <Navbar/>
+        <div className="content"> 
+          {/* <Home/> */}
+          {/* <Homee/> */}
 
-      
-        {/* <h1>App Component</h1>
-        <h1>{title}</h1>
-        <h2>Liked {likes} times</h2> 
+          <Switch> 
+            {/* a switch component makes sure that only 1 component is output on the screen at any given time in our application  */}
+          <Route exact path="/create"> 
+          {/* we have to keep "/create" route above "/" route as if "/" is above then react will match thepath with "/" only */}
+              <Create/>
+            </Route>
+            <Route exact path="/">
+              <Homee/>
+            </Route>
+          </Switch>
+        
+          {/* <h1>App Component</h1>
+          <h1>{title}</h1>
+          <h2>Liked {likes} times</h2> 
 
-        <h1>{10}</h1>
-        <h1>{"raghav"}</h1>
-        <h1>{[1,2,3,45,5]}</h1>
-        <h1>{Math.random()}</h1>
+          <h1>{10}</h1>
+          <h1>{"raghav"}</h1>
+          <h1>{[1,2,3,45,5]}</h1>
+          <h1>{Math.random()}</h1>
 
-        <a href={linkk}>Click here ! Im a link</a> */}
+          <a href={linkk}>Click here ! Im a link</a> */}
 
+        </div>
       </div>
-    </div>
+    </Router>
 
   );
 }

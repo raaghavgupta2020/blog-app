@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 
 import BlogList from "./BlogList";
+import useFetch from "./useFetch";
 
 //we will be creating a state for list of blogs because the user might update , delete or change a particular
 //blog a particular time 
@@ -16,7 +17,10 @@ import BlogList from "./BlogList";
 
 const Homee = () => {
 
-    const[name , setName] = useState("mario");
+    const {data:blogs , isPending , error} = useFetch("http://localhost:8000/blogs")
+    //getting all the objects from the useFetch file
+
+    // const[name , setName] = useState("mario");
 
     // const [blogs , setBlogs] = useState([
     //     {title: 'My new website ' , body: 'lorem ipsum ...', author: 'mario', id: '1'},
@@ -24,14 +28,14 @@ const Homee = () => {
     //     {title: 'Product description' , body: 'lorem ipsum ...', author: 'mario', id: '3'}
     // ])
 
-    const [blogs , setBlogs] = useState(null)
-    //once we fetch the data using the API endpoint we will update the state using the setBlogs
-    //but initially we are taking it as null
+    // const [blogs , setBlogs] = useState(null)
+    // //once we fetch the data using the API endpoint we will update the state using the setBlogs
+    // //but initially we are taking it as null
 
-    //creating a conditional loading message 
-    const[isPending , setIsPending]= useState(true)
+    // //creating a conditional loading message 
+    // const[isPending , setIsPending]= useState(true)
 
-    const[error , setError] = useState(null)
+    // const[error , setError] = useState(null)
     
     const handleDelete = (id) => {
         const newBlogs = blogs.filter((blog)=>(
@@ -49,37 +53,41 @@ const Homee = () => {
     //     console.log(name);
     // },[name]);
 
-    useEffect(()=>{ //we cannot make this anonymous func inside useEffect as async
-        // console.log("re rendering took place , hence useEffect function ran");
-        // console.log(name);
+    // useEffect(()=>{ //we cannot make this anonymous func inside useEffect as async
+    //     // console.log("re rendering took place , hence useEffect function ran");
+    //     // console.log(name);
 
-        setTimeout(()=>{
-            fetch("http://localhost:8000/blogs") //this returns to us a promise
-            .then((res)=>{//response has an "ok" property
-                //this property will be false in case the data received is faulty
-                if(!res.ok){
-                    //we will throw an error
-                    throw Error('could not fetch the data for that resource')
-                    //we will catch below
-                }
-                return res.json() //this passes the json into a javascript object for us
-            })
-            //the above thing returns another promise as res.json in asynchronous and takes some time to run
-            .then((data)=>{
-                // console.log(data);
-                setBlogs(data)
-                setIsPending(false); //as soon as isPending becomes false Loading... div disappears
-            })
-            .catch((err)=>{ //e here refers to any kind of network error while fetching the data
-                console.log(err.message)
-            })//this will catch any kind of network error
-            //failed to fetch error will be shown if server is unreachable 
-            //now there can be cases where error can be returned by the server , that will come in response
+    //     setTimeout(()=>{
+    //         fetch("http://localhost:8000/blogs") //this returns to us a promise
+    //         .then((res)=>{//response has an "ok" property
+    //             //this property will be false in case the data received is faulty
+    //             if(!res.ok){
+    //                 //we will throw an error
+    //                 throw Error('could not fetch the data for that resource')
+    //                 //we will catch below
+    //             }
+    //             return res.json() //this passes the json into a javascript object for us
+    //         })
+    //         //the above thing returns another promise as res.json in asynchronous and takes some time to run
+    //         .then((data)=>{
+    //             // console.log(data);
+    //             setBlogs(data)
+    //             setIsPending(false); //as soon as isPending becomes false Loading... div disappears
+    //             //now we get the data
+    //             setError(null)
+    //         })
+    //         .catch((err)=>{ //e here refers to any kind of network error while fetching the data
+    //             setError(err.message)
+    //             setIsPending(false)
+    //             // console.log(err.message)
+    //         })//this will catch any kind of network error
+    //         //failed to fetch error will be shown if server is unreachable 
+    //         //now there can be cases where error can be returned by the server , that will come in response
 
 
 
-        }, 2000)//this means 2000ms
-    },[]);
+    //     }, 2000)//this means 2000ms
+    // },[]);
 
     //There is something called as a dependency array which can be used to allow function inside useEffect hook to run for 
     // specific re-renders only . an empty dependancy array means  the useEffect hook will only fire the function for the initial render only 
@@ -137,6 +145,7 @@ const Homee = () => {
             {/* here we are changing the state */}
 
             <div className="fetchingdata">
+                {error && <div>{error}</div>}
                 {/* if isPending is true we will show a div */}
                 {isPending && <div>Loading... Fetching data from API</div>}
                 {blogs &&  <BlogList blogs={blogs} title={"Blogs"} handleDelete={handleDelete}/>}
