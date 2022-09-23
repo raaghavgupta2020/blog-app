@@ -5,6 +5,7 @@ import Homee from './Homee';
 import {BrowserRouter as Router , Route  , Switch} from 'react-router-dom';
 import Create from './Create';
 import BlogDetails from './BlogDetails';
+import NotFound from './Notfound';
 
 function App() { //App component is also called the root component 
   //It is the first component which gets rendered through the DOM
@@ -39,6 +40,10 @@ function App() { //App component is also called the root component
             <Route exact path="/blogs/:id">
               {/* this id here is called the route paramater*/}
               <BlogDetails/>  
+            </Route>
+            <Route path="*">
+              {/* this id here is called the route paramater*/}
+              <NotFound/>  
             </Route>
           </Switch>
         
