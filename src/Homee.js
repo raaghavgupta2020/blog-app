@@ -37,12 +37,12 @@ const Homee = () => {
 
     // const[error , setError] = useState(null)
     
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter((blog)=>(
-            blog.id!==id
-        ))
-        setBlogs(newBlogs);
-    }
+    // const handleDelete = (id) => {
+    //     const newBlogs = blogs.filter((blog)=>(
+    //         blog.id!==id
+    //     ))
+    //     setBlogs(newBlogs);
+    // }
 
     //this function will fire on every render
     //if we bychances change the state in useEffect function we will be struck in a continuous LOOP
@@ -144,13 +144,21 @@ const Homee = () => {
 
             {/* here we are changing the state */}
 
+            {/* if isPending is true we will show a div */}
+
+            {/* <div className="fetchingdata">
+                {error && <div>{error}</div>} */}
+                {/* {isPending && <div>Loading... Fetching data from API</div>}
+                {blogs &&  <BlogList blogs={blogs} title={"Blogs"} handleDelete={handleDelete}/>}
+            </div> */}
+            {/* as we have put this blogs && and we have covered the thing with a {} , it means it is a conditional statement */}
+
             <div className="fetchingdata">
                 {error && <div>{error}</div>}
                 {/* if isPending is true we will show a div */}
                 {isPending && <div>Loading... Fetching data from API</div>}
-                {blogs &&  <BlogList blogs={blogs} title={"Blogs"} handleDelete={handleDelete}/>}
+                {blogs &&  <BlogList blogs={blogs} title={"Blogs"} />}
             </div>
-            {/* as we have put this blogs && and we have covered the thing with a {} , it means it is a conditional statement */}
 
 
         </div>
